@@ -1,0 +1,66 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Test Application
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout du code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configuration de Java et Kotlin
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Installer les dépendances
+      - name: Install dependencies
+        run: ./gradlew dependencies
+
+      # Build de l'application
+      - name: Build application
+        run: ./gradlew build
+
+      # Lancement des tests
+      - name: Run tests
+        run: ./gradlew test
+
+      # Publier les résultats des tests
+      - name: Publish test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: build/reports/tests/test/
+
+  publish:
+    name: Deploy Artifacts
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout du code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Upload des résultats des tests
+      - name: Upload test results
+        uses: actions/download-artifact@v3
+        with:
+          name: test-results
+          path: test-results
+
+      # Étape fictive de déploiement (ajustez en fonction de votre processus)
+      - name: Deploy application
+        run: echo "Déploiement de l'application..."
