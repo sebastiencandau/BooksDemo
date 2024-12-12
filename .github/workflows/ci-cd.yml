@@ -47,7 +47,7 @@ jobs:
         run: ./gradlew jacocoTestReport
 
       - name: Upload JaCoCo HTML report
-        uses: PavanMudigonda/jacoco-reporter@v2
+        uses: PavanMudigonda/jacoco-reporter@v5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: build/jacocoHTML # Chemin du dossier contenant `index.html`
