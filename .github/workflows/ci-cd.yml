@@ -43,3 +43,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Run tests with jacoco
+        run: ./gradlew jacocoTestReport
+
+      - name: Upload JaCoCo HTML report
+        uses: PavanMudigonda/jacoco-reporter@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: build/jacocoHTML # Chemin du dossier contenant `index.html`
+          artifact_name: jacoco-html-report
+
