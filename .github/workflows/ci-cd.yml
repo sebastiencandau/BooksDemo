@@ -50,6 +50,6 @@ jobs:
         uses: PavanMudigonda/jacoco-reporter@v5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: build/jacocoHTML # Chemin du dossier contenant `index.html`
+          path: build/customJacocoReportDir/test # Chemin du dossier contenant `index.html`
           artifact_name: jacoco-html-report
 
